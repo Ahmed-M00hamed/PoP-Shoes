@@ -9,11 +9,13 @@ import OrderSuccess from './pages/OrderSuccess'
 
 import AdminLogin from './pages/AdminLogin'
 import AdminProducts from './pages/AdminProducts'
-import ProtectedRoute from './components/ProtectedRoute'
 import AdminOrders from './pages/AdminOrders'
+import AdminSales from './pages/AdminSales'
+import ProtectedRoute from './components/ProtectedRoute'
 import OrderTracking from './pages/OrderTracking'
 import MyOrders from './pages/MyOrders'
 import LoadingBar from './components/LoadingBar'
+
 
 
 function App() {
@@ -43,6 +45,14 @@ function App() {
           element={
             <ProtectedRoute>
               <AdminOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/sales"
+          element={
+            <ProtectedRoute>
+              <AdminSales />
             </ProtectedRoute>
           }
         />

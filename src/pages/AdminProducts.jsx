@@ -311,6 +311,12 @@ function AdminProducts() {
                     >
                         الطلبات
                     </button>
+                    <button
+                        onClick={() => navigate('/admin/sales')}
+                        className="px-4 py-2 rounded-lg bg-gray-700 text-white cursor-pointer hover:bg-gray-600 transition"
+                    >
+                        المبيعات
+                    </button>
                 </div>
 
                 {/* لوحة معلومات: مخزون قارب على النفاد + أكتر المنتجات مبيعاً */}
