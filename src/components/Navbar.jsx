@@ -28,28 +28,38 @@ function Navbar() {
 
     const closeMenu = () => setMenuOpen(false)
 
-    const handleLogoClick = () => {
+    const handleLogoClick = (e) => {
+        e.preventDefault()
+
         clickCount.current += 1
 
         if (clickTimer.current) {
             clearTimeout(clickTimer.current)
         }
 
-        clickTimer.current = setTimeout(() => {
-            clickCount.current = 0
-        }, 1500)
-
+        // لو وصلنا 5 ضغطات
         if (clickCount.current >= 5) {
             clickCount.current = 0
             navigate('/admin/login')
+            return
         }
+
+        // ننتظر شوية عشان نعرف هل المستخدم هيكمل 5 ضغطات
+        clickTimer.current = setTimeout(() => {
+            // لو ضغطة واحدة فقط
+            if (clickCount.current === 1) {
+                navigate('/')
+            }
+
+            clickCount.current = 0
+        }, 400)
     }
 
     return (
         <nav
             className={`fixed top-0 left-0 w-full z-50 p-4 px-8 text-white transition-colors duration-300 ${scrolled
-                ? 'bg-black/80 backdrop-blur-sm shadow-lg'
-                : 'bg-transparent'
+                    ? 'bg-black/80 backdrop-blur-sm shadow-lg'
+                    : 'bg-transparent'
                 }`}
         >
             <div className="container mx-auto flex items-center justify-between">
@@ -57,15 +67,16 @@ function Navbar() {
                 <Link
                     to="/"
                     className="text-3xl font-bold"
-                    onClick={(e) => {
-                        e.preventDefault()
-                        handleLogoClick()
-                    }}
+                    onClick={handleLogoClick}
                 >
-                    <span className="text-red-500 text-4xl">PoP</span> Shoes
+                    <span className="text-red-500 text-4xl">
+                        PoP
+                    </span>{' '}
+                    Shoes
                 </Link>
 
                 <ul className="hidden md:flex gap-6">
+
                     <li>
                         <Link
                             to="/"
@@ -101,10 +112,13 @@ function Navbar() {
                             Tracking orders
                         </Link>
                     </li>
+
                 </ul>
 
                 <button
-                    onClick={() => setMenuOpen((prev) => !prev)}
+                    onClick={() =>
+                        setMenuOpen((prev) => !prev)
+                    }
                     className="md:hidden cursor-pointer p-2"
                     aria-label="فتح القائمة"
                 >
@@ -132,6 +146,7 @@ function Navbar() {
                         )}
                     </svg>
                 </button>
+
             </div>
 
             {menuOpen && (
