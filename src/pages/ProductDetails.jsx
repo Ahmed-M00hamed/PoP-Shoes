@@ -131,7 +131,7 @@ function ProductDetails() {
 
     return (
         <div className="bg-center bg-cover bg-no-repeat min-h-screen" style={{ backgroundImage: `url(/background.png)` }}>
-            <div className="container mx-auto py-16 px-6">
+            <div className="container mx-auto py-20 px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div>
                         <img
