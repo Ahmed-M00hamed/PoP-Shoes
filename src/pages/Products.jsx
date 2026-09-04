@@ -60,7 +60,6 @@ function Products() {
     return (
         <div className="bg-center bg-cover bg-no-repeat min-h-screen" style={{ backgroundImage: `url(/background.png)` }}>
             <div className="container mx-auto py-20">
-                <h1 className="text-3xl font-bold mb-6 text-white">All Products</h1>
 
                 {/* البحث والفلترة */}
                 <div className="flex flex-col md:flex-row gap-4 mb-8">

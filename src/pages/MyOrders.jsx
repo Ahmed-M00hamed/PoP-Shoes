@@ -42,7 +42,7 @@ function MyOrders() {
     return (
         <div className="bg-center bg-cover bg-no-repeat min-h-screen" style={{ backgroundImage: `url(/background.png)` }}>
             <div className="container mx-auto py-20">
-                <h1 className="text-3xl font-bold mb-8 text-white">طلباتي</h1>
+
 
                 {loading ? (
                     <p className="text-white">جاري التحميل...</p>
