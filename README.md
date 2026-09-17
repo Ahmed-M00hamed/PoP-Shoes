@@ -1,66 +1,113 @@
 # 👟 PoP Shoes
 
-A full-featured sneaker e-commerce store built with **React** and **Tailwind CSS**, powered end-to-end by **Supabase** (database, storage, and authentication).
+A full-stack sneaker e-commerce platform built with **React, Vite, Tailwind CSS, and Supabase**.
 
----
+PoP Shoes provides a complete shopping experience for customers and a secure admin dashboard for managing products, variants, inventory, orders, and sales.
+
+## 🚀 Live Demo
+
+**[View Live Demo](https://pop-shoes.vercel.app/)**
 
 ## ✨ Features
 
-### Customer-facing
+### 🛍️ Customer Experience
 
-- Browse products with search and category filtering
-- Product detail page with **color and size selection**, including a per-color image gallery
-- Guest cart that works without sign-up, backed by secure anonymous sessions
-- Full checkout flow that saves orders directly to the database
-- **Order tracking page** with live status (pending / processing / shipped / delivered)
-- **"My Orders"** page listing past orders from the same device
-- Automatic low-stock warning when a specific size is running out
-- Fully responsive design with an adaptive mobile navigation menu
+- Browse and search products
+- Product details with color and size selection
+- Color-specific product image galleries
+- Variant-level inventory management
+- Guest shopping cart using anonymous authentication
+- Responsive cart and checkout flow
+- Governorate-based shipping calculation
+- Secure order creation
+- Order confirmation and tracking
+- "My Orders" page for previous orders
+- Order cancellation with cancellation reasons
+- Automatic low-stock indicators
+- Fully responsive design for desktop and mobile
 
-### Admin panel
+### 👨‍💼 Admin Dashboard
 
-- Secure login via Supabase Auth
-- Full product management: create / edit / delete
-- Manage colors and sizes per product, each with independent stock
-- Upload multiple images per product (primary image + color-specific gallery) via Supabase Storage
-- Order management with status updates
-- At-a-glance dashboard: low-stock alerts + best-selling products
+- Secure admin authentication with Supabase Auth
+- Create, edit, and delete products
+- Manage product colors and sizes
+- Manage independent stock for each variant
+- Upload primary and gallery product images
+- Manage customer orders
+- Update order statuses
+- View low-stock products
+- View best-selling products
+- Sales dashboard with date filtering
+- Product-level sales statistics
 
----
+### 🔐 Security & Data Integrity
+
+- Row Level Security (RLS) enabled on protected database tables
+- Customers can only access their own orders
+- Admin operations are restricted to authorized users
+- Order creation is handled through secure database functions
+- Product prices and shipping costs are validated server-side
+- Stock is checked and updated atomically
+- Overselling is prevented using database-level row locking
+- Order cancellation restores the purchased stock
+- Anonymous customers cannot access other customers' orders
+
+## 🧪 Tested Order Flow
+
+The main e-commerce flow has been manually tested through real customer scenarios, including:
+
+- Normal order creation
+- Inventory deduction
+- Insufficient-stock protection
+- Overselling prevention across multiple devices
+- Customer order isolation
+- Order cancellation
+- Stock restoration after cancellation
+- Shipping and delivery status flow
+- Cancellation restrictions after shipping
 
 ## 🛠️ Tech Stack
 
-| Technology                                              | Purpose                                             |
-| ------------------------------------------------------- | --------------------------------------------------- |
-| [React](https://react.dev) + [Vite](https://vitejs.dev) | Frontend framework & build tool                     |
-| [React Router](https://reactrouter.com)                 | Client-side routing                                 |
-| [Tailwind CSS](https://tailwindcss.com)                 | Styling                                             |
-| [Supabase](https://supabase.com)                        | Postgres database, file storage, and authentication |
-
----
+| Technology       | Purpose                                                              |
+| ---------------- | -------------------------------------------------------------------- |
+| **React**        | Frontend UI                                                          |
+| **Vite**         | Development and production build tool                                |
+| **React Router** | Client-side routing                                                  |
+| **Tailwind CSS** | Styling and responsive UI                                            |
+| **Supabase**     | PostgreSQL database, authentication, storage, and database functions |
+| **Vercel**       | Deployment and hosting                                               |
+| **Git & GitHub** | Version control                                                      |
 
 ## 📁 Project Structure
 
-```
+```text
 src/
-├── components/       # Shared UI components (Navbar, Footer, Spinner...)
-├── pages/            # App pages (Home, Products, Cart, Checkout, Admin...)
-├── utils/            # Helper functions (guestId, cart)
-├── supabaseClient.js # Supabase client setup
-└── App.jsx           # Route definitions
-```
+├── components/          # Shared UI components
+├── pages/               # Customer and admin pages
+├── utils/               # Helper functions and utilities
+├── supabaseClient.js    # Supabase client configuration
+└── App.jsx              # Application routes
 
----
+public/
+└── products/            # Product images
+```
 
 ## ⚙️ Local Setup
 
-### 1. Install dependencies
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Ahmed-M00hamed/PoP-Shoes.git
+cd PoP-Shoes
+```
+
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Configure environment variables
+### 3. Configure environment variables
 
 Create a `.env` file in the project root:
 
@@ -69,56 +116,156 @@ VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-> ⚠️ `.env` is excluded via `.gitignore` — never commit it or share these values publicly.
+> `.env` is excluded through `.gitignore` and should never be committed to the repository.
 
-### 3. Set up the database
+### 4. Configure Supabase
 
-Run the SQL scripts in order from the Supabase **SQL Editor**:
+The application requires:
 
-1. Core tables (products, cart_items)
-2. Orders table (orders)
-3. Admin RLS policies (admin_policies)
-4. Colors & sizes support (variants_migration)
-5. Secure order access via database functions (secure_orders)
-6. Secure cart access via anonymous auth (secure_cart)
+- Supabase Authentication
+- Anonymous Sign-Ins
+- PostgreSQL database
+- Row Level Security policies
+- `product-images` Storage bucket
+- Admin user account
 
-### 4. Enable required Supabase features
+The database schema and security configuration should be recreated in the target Supabase project before running the application.
 
-- **Authentication → Sign In / Providers**: enable **Anonymous Sign-Ins**
-- **Storage**: create a bucket named `product-images` and mark it **Public**
-- **Authentication → Users**: create an admin account (Create new user)
-
-### 5. Run the project
+### 5. Start the development server
 
 ```bash
 npm run dev
 ```
 
----
+The application will be available at:
 
-## 🔐 Admin Access
-
+```text
+http://localhost:5173
 ```
+
+## 🔐 Admin Dashboard
+
+Admin login:
+
+```text
 /admin/login
 ```
 
-Sign in with the account created in Supabase Authentication.
+After authentication, authorized administrators can access:
 
----
+```text
+/admin
+/admin/orders
+/admin/sales
+```
+
+Admin access is protected by database-level authorization rather than relying only on frontend route protection.
 
 ## 🚀 Deployment
 
-The project is ready to deploy on [Vercel](https://vercel.com)
+PoP Shoes can be deployed using Vercel.
 
-1. Connect the GitHub repository to the platform
-2. Add the environment variables (`VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`) in the project settings
-3. Build command: `npm run build`
-4. Output directory: `dist`
+### Build
 
-> 💡 Before handing this off to a real client, review Supabase's free-tier limits (projects auto-pause after a week of inactivity) and consider upgrading to a paid plan if needed.
+```bash
+npm run build
+```
 
----
+### Output directory
+
+```text
+dist
+```
+
+### Environment Variables
+
+Add the following variables to the Vercel project:
+
+```env
+VITE_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY
+```
+
+After deployment, verify:
+
+- Customer authentication
+- Product loading
+- Cart functionality
+- Checkout
+- Order creation
+- Order tracking
+- Admin authentication
+- Product management
+- Image uploads
+- Order management
+
+## 📸 Screenshots
+
+### Home Page
+
+![Home Page](public/screenshots/home.png)
+
+### products
+
+![Products Page](public/screenshots/products.png)
+
+### Product Details
+
+![Product Details](public/screenshots/product-details.png)
+
+### Shopping Cart
+
+![Shopping Cart](public/screenshots/cart.png)
+
+### Checkout
+
+![Checkout](public/screenshots/checkout.png)
+
+### Order Tracking
+
+![Order Tracking](public/screenshots/order-tracking.png)
+
+### Order Management
+
+![Order Management](public/screenshots/admin-orders.png)
+
+### Product Management
+
+![Product Management](public/screenshots/admin-products.png)
+
+### Sales Dashboard
+
+![Sales Dashboard](public/screenshots/admin-sales.png)
+
+## 💡 Project Highlights
+
+This project was built as a complete e-commerce application rather than a static frontend.
+
+The main focus was implementing the business logic behind:
+
+- Variant-level inventory
+- Secure guest checkout
+- Server-side order validation
+- Atomic stock updates
+- Order ownership
+- Cancellation and stock restoration
+- Admin authorization
+- Product image management
+- Sales reporting
+
+## 📌 Future Improvements
+
+Possible future improvements include:
+
+- Online payment integration
+- Customer notifications through WhatsApp or email
+- Coupon and discount system
+- Advanced analytics
+- Customer accounts and profile management
+- Product reviews and ratings
+- Automated image optimization
+- Order notification system
 
 ## 📄 License
 
-This project is intended for educational and private commercial use.
+This project is intended for portfolio, educational, and private commercial use.
